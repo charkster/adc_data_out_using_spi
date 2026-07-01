@@ -19,7 +19,8 @@ module spi_master_psram_write (
 
   typedef enum logic [1:0] {IDLE, CMD, ADDR, DATA} state_t;
   state_t next_state, state;
-  logic en_sclk;
+  
+  logic        en_sclk;
   logic  [4:0] counter;
   logic [23:0] address;
   logic [15:0] data;
