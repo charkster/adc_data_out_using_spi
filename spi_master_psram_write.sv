@@ -6,7 +6,7 @@ module spi_master_psram_write (
   input  logic  [15:0] adc_data,
   output logic         busy,
 
-  output logic         sck,
+  output logic         sclk,
   output logic         mosi,
 //  input  logic         miso,
   output logic         cs_n
@@ -27,12 +27,12 @@ module spi_master_psram_write (
   assign busy = (state != IDLE);
 
 //  Gowin_DHCEN u_spi_clk_gate
-//    ( .clkout (sck),    // output
+//    ( .clkout (sclk),    // output
 //      .clkin  (clk),    // input
 //      .ce     (en_sclk) // input
 //    );
 
-  assign sck = clk && en_sclk; // dirty clock gate
+  assign sclk = clk && en_sclk; // dirty clock gate
 
   always_comb
     if ((state == IDLE) && start)                 next_state = CMD;
@@ -72,7 +72,7 @@ module spi_master_psram_write (
     if (!rst_n)                                      data <= 'd0;
     else if ((state == IDLE) && (next_state == CMD)) data <= adc_data; // optional holding of input adc_data
 
-  always_ff @(negedge clk or negedge rst_n)
+  always_ff @(negedge clk or negedge rst_n) // PSRAM capures data on the positive edge of SCLK
     if (!rst_n)                                  mosi <= 1'b0;
     else if ((state == CMD) && (counter < 'd8))  mosi <= CMD_DATA[counter];
     else if (state == ADDR)                      mosi <= address[counter];
