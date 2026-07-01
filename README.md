@@ -5,3 +5,4 @@ In order to store more ADC conversions outside of the IC, this simple SPI master
 
 If you added a SPI DAC to the evaluation board you could even compare a delayed version of the ADC analog input with itself (address data would need to configured to be static and single byte). The point is that driving the ADC conversion data out as SPI data is useful.
 
+![picture](https://github.com/charkster/adc_data_out_using_spi/blob/main/single_cycle.png)
