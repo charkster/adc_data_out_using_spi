@@ -1,3 +1,8 @@
+// The SPI write bus cycle to PSRAM looks like this...
+// 1 byte command + 3 bytes address + 2 bytes data = 6 bytes sent
+// the FSM states are IDLE, CMD, ADDR and DATA, and this matches that order
+// 48 SCLK cycles are needed, and the chip select goes active 4 CLK cycles early
+// and chip select goes in-active 4 CLK cycles after SCLK stops, for a total duration of 56 CLK cycles
 
 module spi_master_psram_write (
   input  logic         clk,
